@@ -1,6 +1,6 @@
 // contacto.js
 // Validaciones del formulario de contacto.
-// Verifica que los campos estén completos y que el correo tenga formato válido.
+// Verifica que todos los campos estén completos y que el correo tenga formato válido.
 
 document.addEventListener('DOMContentLoaded', () => {
   const formulario = document.getElementById('formulario-contacto');
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mensaje === '') errores.push('El mensaje es obligatorio');
 
     // Validar el formato del correo con una expresión regular
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-      errores.push('Correo inválido');
+    if (correo !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      errores.push('Correo inválido (debe incluir @ y un dominio)');
     }
 
     // Obtener el elemento donde se mostrarán los mensajes
@@ -40,9 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
       mensajeError.style.color = 'red';
     } else {
       // Si todo está bien, mostrar mensaje de éxito en verde
-      mensajeError.innerHTML = '¡Mensaje enviado correctamente!';
+      mensajeError.innerHTML = '✅ ¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.';
       mensajeError.style.color = 'green';
+
+      // Limpiar el formulario
       formulario.reset();
+
+      // Ocultar el mensaje de éxito después de 5 segundos
+      setTimeout(() => {
+        mensajeError.innerHTML = '';
+      }, 5000);
     }
   });
 });
