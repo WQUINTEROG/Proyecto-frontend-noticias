@@ -1,4 +1,6 @@
-// favoritos.js - Gestión de favoritos con localStorage
+// favoritos.js
+// Gestiona los favoritos del usuario con localStorage.
+// Permite agregar, eliminar y visualizar las noticias guardadas.
 
 // Obtener favoritos del localStorage
 function obtenerFavoritos() {
@@ -28,7 +30,8 @@ function toggleFavorito(id, elemento) {
   }
 }
 
-// Renderizar favoritos en la página de favoritos
+// Renderizar las noticias favoritas en la página de favoritos
+// y actualizar el contador con el número de noticias guardadas
 async function renderizarFavoritos() {
   const contenedor = document.getElementById('contenedor-favoritos');
   const contador = document.getElementById('contador-favoritos');
@@ -68,7 +71,7 @@ async function renderizarFavoritos() {
 document.addEventListener('DOMContentLoaded', renderizarFavoritos);
 
 
-// Toggle favorito desde el detalle (actualiza también el texto del botón)
+// Obtener favorito desde el detalle (actualiza también el texto del botón)
 function toggleFavoritoDetalle(id, elemento) {
   let favoritos = obtenerFavoritos();
   const index = favoritos.indexOf(id);

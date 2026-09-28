@@ -1,4 +1,7 @@
-// detalle.js - Carga el detalle de una noticia según el ID de la URL
+// detalle.js
+// Carga el detalle de una noticia según el ID que llega por la URL.
+// También configura el botón "Volver" según el origen del usuario
+// y verifica si la noticia está guardada en favoritos.
 
 document.addEventListener('DOMContentLoaded', async () => {
   const contenedor = document.getElementById('detalle-contenido');
@@ -14,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const noticias = await cargarNoticias();
 
   // Si no hay ID, usar la última noticia vista o la primera
+  // (guardada en localStorage) o la primera noticia del array
   if (!id || isNaN(id)) {
     const ultimaVista = localStorage.getItem('ultimaNoticia');
     id = ultimaVista ? parseInt(ultimaVista) : noticias[0].id;
@@ -29,8 +33,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Guardar la noticia actual como última vista
   localStorage.setItem('ultimaNoticia', noticia.id);
 
-  // CONFIGURAR EL BOTÓN "VOLVER"
+  // Configura el boton "volver"
   if (enlaceVolver) {
+    // Se lee el parámetro "desde" de la URL para saber
+    // desde dónde vino el usuario (listado, favoritos o home)
+    // y así mostrar el botón "Volver" correcto
     if (desde === 'favoritos') {
       enlaceVolver.href = 'favoritos.html';
       enlaceVolver.textContent = '← Volver a favoritos';
@@ -43,10 +50,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // VERIFICAR SI YA ESTÁ EN FAVORITOS
+  // Verificar si ya esta en favoritos
   const esFavorito = obtenerFavoritos().includes(noticia.id);
 
   // Renderizar el detalle
+  // El contenido se divide por párrafos (\n\n) y cada uno
+// se convierte en una etiqueta <p> para mejor presentación.
   contenedor.innerHTML = `
     <img src="${noticia.imagen}" alt="${noticia.titulo}" class="detalle-imagen">
     <span class="badge">${noticia.categoria}</span>

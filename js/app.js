@@ -1,5 +1,8 @@
-// app.js - Lógica principal del sitio
+// app.js
+// Lógica principal del sitio. Carga las noticias desde el JSON
+// y las renderiza dinámicamente en tarjetas.
 
+// Cargar noticias desde el archivo JSON
 async function cargarNoticias() {
   try {
     const respuesta = await fetch('data/noticias.json');
@@ -11,6 +14,7 @@ async function cargarNoticias() {
   }
 }
 
+// Renderizar las cards en el contenedor
 function renderizarCards(noticias, contenedorId) {
   const contenedor = document.getElementById(contenedorId);
   if (!contenedor) return;
